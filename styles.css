@@ -1,0 +1,276 @@
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "Georgia", serif; /* mer gammaldags känsla */
+}
+
+body {
+  margin: 0;
+  /* 🇸🇪 Traditionella natur/påskfärger */
+  background: linear-gradient(#F7E7A9, #DFF2BF, #F4C2C2);
+  color: #3b2a1a;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Lager bakom allt */
+.easter-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* Se till att innehåll ligger ovanför */
+main, .page {
+  position: relative;
+  z-index: 1;
+}
+
+/* Symboler */
+.easter-item {
+  position: absolute;
+  top: -10vh;
+  user-select: none;
+  animation-name: fall, sway, spin;
+  animation-timing-function: linear, ease-in-out, linear;
+  animation-iteration-count: infinite;
+}
+
+/* Fall ner */
+@keyframes fall {
+  to {
+    transform: translateY(120vh);
+  }
+}
+
+/* Sidvind */
+@keyframes sway {
+  0% { margin-left: 0; }
+  50% { margin-left: 40px; }
+  100% { margin-left: 0; }
+}
+
+/* Rotation */
+@keyframes spin {
+  from { rotate: 0deg; }
+  to { rotate: 360deg; }
+}
+
+
+/* 🌿 Björkris-mönster */
+body::before {
+  content: "🌿";
+  position: fixed;
+  inset: 0;
+  font-size: 40px;
+  opacity: 0.15;
+  pointer-events: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-around;
+  justify-content: space-around;
+}
+
+/* 🧹 Påskkärring-symboler */
+body::after {
+  content: "🧹 🐈‍⬛ 🐣 🥚";
+  position: fixed;
+  top: 10px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  opacity: 0.15;
+  font-size: 28px;
+  pointer-events: none;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 16px;
+}
+
+.page {
+  width: 100%;
+  max-width: 420px;
+
+  /* 🏡 lantlig panel/vykort */
+  background: #fff8dc;
+  border-radius: 20px;
+  padding: 22px 18px;
+  text-align: center;
+
+  border: 4px double #c7a55b;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.hidden { display: none; }
+
+.primary {
+  background: #eed202;
+  color: #3b2a1a;
+  border: 2px solid #b89b00;
+  border-radius: 14px;
+  padding: 14px;
+  font-size: 1.1rem;
+  width: 100%;
+  margin-top: 14px;
+  font-weight: 700;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+/* 🥚 målade ägg färger */
+.category:nth-child(odd) {
+  background: #f9e79f;
+}
+
+.category:nth-child(even) {
+  background: #f5c6aa;
+}
+
+.category {
+  color: #3b2a1a;
+  border-radius: 14px;
+  padding: 14px;
+  font-weight: 700;
+  border: 2px solid #d6c28a;
+}
+
+/* 🌸 folkloremönster */
+.category::after {
+  content: "✿";
+  display: block;
+  font-size: 20px;
+  opacity: 0.4;
+}
+
+.primary,
+.category,
+#answers button {
+  min-height: 52px;
+  font-size: 1rem;
+  touch-action: manipulation;
+}
+
+#answers button {
+  border-radius: 14px;
+  font-weight: 600;
+  padding: 14px;
+  background: #fff4c1;
+  border: 2px solid #d6c28a;
+}
+
+#progress {
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: 2px solid #d6c28a;
+  background: #fffdf5;
+}
+
+.error { color: #a94442; }
+
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+}
+
+button, input {
+  font-size: 16px;
+}
+
+/* 🐣 timer som påskägg */
+#timer {
+  background: linear-gradient(#eed202, #f9e79f);
+  color: #3b2a1a;
+  border-radius: 50%;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  border: 2px solid #b89b00;
+}
+
+.correct { color: #3c763d; }
+.wrong { color: #a94442; }
+
+.review-item {
+  margin-bottom: 12px;
+  border-bottom: 1px dashed #c7a55b;
+}
+
+#resultImage {
+  height: 120px;
+  font-size: 64px;
+  background: #fff4c1;
+  color: #3b2a1a;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px double #c7a55b;
+}
+
+/* 🪶 FALLANDE FJÄDRAR + ÄGG */
+.easter::before,
+.easter::after {
+  content: "";
+  position: fixed;
+  inset: -10vh 0 0 0;
+  pointer-events: none;
+
+  background-image:
+    radial-gradient(circle at 20px 30px, transparent 8px, transparent 8px),
+    radial-gradient(circle at 60px 80px, transparent 8px, transparent 8px);
+
+  font-size: 24px;
+}
+
+/* Lager 1 */
+.easter::before {
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' font-size='26'><text y='20'>🪶</text></svg>"),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' font-size='26'><text y='20'>🥚</text></svg>");
+
+  background-size: 120px 120px;
+  animation: easterFall 14s linear infinite;
+}
+
+/* Lager 2 (lite långsammare = djupkänsla) */
+.easter::after {
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' font-size='26'><text y='20'>🐣</text></svg>"),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' font-size='26'><text y='20'>🪶</text></svg>");
+
+  background-size: 160px 160px;
+  animation: easterFall 22s linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes easterFall {
+  to {
+    transform: translateY(120vh);
+  }
+}

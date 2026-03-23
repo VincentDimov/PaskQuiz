@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+    <title>Påsk Quiz</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="easter">
+    <div class="snow"></div>
+
+    <main id="app">
+      <section class="page" id="page-start">
+        <h1>🐣 Påsk Quiz 🐣</h1>
+        <button type="button" class="primary" id="btnStart">Fortsätt</button>
+      </section>
+
+      <section class="page hidden" id="page-spel">
+        <h1>🐣 Påsk Quiz 🐣</h1>
+        <p>1. Välj en kategori</p>
+        <p>
+          2. Besvara 10 frågor, <br>(varje fråga har 4 svarsalternativ, <br> bara ett
+          alternativ är rätt)
+        </p>
+        <p>3. Man har 10 seekunder för att besvara varje fråga</p>
+        <p>4. Vinsten:</p>
+        <ul>
+          <li>0 – 4 Rätt = Påskägg</li>
+          <li>5 – 7 Rätt = Påskhare</li>
+          <li>8 – 9 Rätt = SuperHare</li>
+          <li>10 Rätt = 500 kr</li>
+        </ul>
+
+        <p><strong>Priset för en runda är 50 kr</strong></p>
+
+        <!-- 👇 KLICKBAR LÄNK -->
+        <p>
+          <a href="#" id="linkTerms">Terms and Conditions</a>
+        </p>
+
+        <button class="primary" id="btnToPassword">
+          Acceptera och fortsätt
+        </button>
+      </section>
+
+      <section class="page hidden" id="page-terms">
+        <h1>Spelvillkor & Policy</h1>
+        <p>
+          Det här quizet är ett spel skapat för underhållning, utmaning och nöje
+          🎮🧠.
+        </p>
+        <p>
+          Målet är att ha kul, testa dina kunskaper och kanske känna spänningen
+          av att klara alla frågor.
+        </p>
+        <p>
+          För att ha chans att vinna behöver du klara ett visst antal frågor
+          korrekt. Att klara quizet innebär dock <strong>inte</strong> någon
+          garanti för vinst.
+        </p>
+        
+        <p>Säkerställ att din enhet och internetuppkoppling fungerar</p>
+        
+        <h2>Ansvar & teknik</h2>
+        <p>
+          Vi kan tyvärr inte ta ansvar för tekniska problem som ligger utanför
+          vår kontroll, till exempel uppkopplingsfel, buggar eller
+          kompatibilitetsproblem.
+        </p>
+        
+        <p>
+          Quizet tillhandahålls i befintligt skick. I den utsträckning som
+          svensk lag tillåter ansvarar vi inte för direkta eller indirekta
+          skador, förluster eller missade möjligheter som kan uppstå i samband
+          med spelet.
+        </p>
+        <p>
+          Om något inte fungerar som tänkt – till exempel om spelet laggar,
+          kraschar eller ger fel resultat – utgår ingen ersättning.
+        </p>
+        <h2>Vinster</h2>
+        <p>
+          Eventuella vinster delas ut i befintligt skick och kan inte bytas mot
+          kontanter eller andra alternativ
+        </p>
+        <p>
+          Vi ansvarar inte för hur vinster används eller för eventuella skatter
+          eller avgifter som kan bli aktuella för vinnaren.
+        </p>
+        
+        <p>Eventuella tvister avgörs på plats.</p>
+        <p>
+          Som en bonus <em>kan</em> det finnas möjlighet att vinna ett pris –
+          men låt oss vara helt tydliga:
+        </p>
+        <p>
+          Chansen att vinna är extremt liten och i praktiken nära noll. Se
+          därför vinsten som en kul extra grej, inte som något du kan räkna med.
+        </p>
+        <hr />
+        <p>Genom att spela quizet godkänner du villkoren ovanför.</p>
+        
+        <button class="primary" id="btnBackToSpel">
+          Acceptera och fortsätt
+        </button>
+
+ </section>
+
+      <section class="page hidden" id="page-password">
+        <h2>Fråga Påsk Harre <br>om lösenord</h2>
+        <input type="password" id="passwordInput" placeholder="Lösenord" />
+        <p id="passwordError" class="error hidden">Fel lösenord</p>
+      </section>
+
+      <section class="page hidden" id="page-category">
+        <h2>Välj kategori</h2>
+        <div class="grid">
+          <button class="category" data-cat="pask">Påsk i Sverige</button>
+          <button class="category" data-cat="world">
+            Påsk i Världen
+          </button>
+        </div>
+      </section>
+
+      <section class="page hidden" id="page-quiz">
+        <div class="quiz-header">
+          <div id="timer">10</div>
+          <div id="progress"></div>
+        </div>
+        <h2 id="question"></h2>
+        <div id="answers" class="grid"></div>
+      </section>
+
+      <section class="page hidden" id="page-result">
+        <div id="resultImage"></div>
+        <h2 id="scoreText"></h2>
+        <p id="resultText"></p>
+      </section>
+    </main>
+    
+    <script>
+const symbols = ["🪶","🥚","🐣","🧹","🐈‍⬛"];
+
+const container = document.createElement("div");
+container.className = "easter-bg";
+document.body.appendChild(container);
+
+function createItem(startAnywhere = false) {
+  const el = document.createElement("div");
+  el.className = "easter-item";
+
+  // slumpa symbol
+  el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+
+  // slumpa X position
+  el.style.left = Math.random() * 100 + "vw";
+
+  // slumpa storlek
+  const size = 18 + Math.random() * 26;
+  el.style.fontSize = size + "px";
+
+  // slumpa hastighet
+  const fallDuration = 10 + Math.random() * 15;
+  const swayDuration = 3 + Math.random() * 4;
+  const spinDuration = 8 + Math.random() * 12;
+
+  el.style.animationDuration =
+    fallDuration + "s, " +
+    swayDuration + "s, " +
+    spinDuration + "s";
+
+  // ⭐ Starta slumpmässigt över hela skärmen
+  if (startAnywhere) {
+    const randomY = Math.random() * 120;
+    el.style.top = randomY + "vh";
+
+    // justera animation så den redan "är igång"
+    el.style.animationDelay = "-" + (Math.random() * fallDuration) + "s";
+  }
+
+  container.appendChild(el);
+
+  // ta bort efter animation
+  setTimeout(() => {
+    el.remove();
+  }, fallDuration * 1000);
+}
+
+/* ⭐ Fyll skärmen direkt */
+for (let i = 0; i < 40; i++) {
+  createItem(true);
+}
+
+/* ⭐ Fortsätt generera nya */
+setInterval(() => createItem(false), 500);
+</script>
+
+
+
+
+    <script src="script.js"></script>
+  </body>
+</html>
